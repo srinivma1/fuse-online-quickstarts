@@ -10,37 +10,31 @@ Syndesis is a cloud native application targeted at systems integration. It lever
 
 The easiest way to try Syndesis is to use a trial of the product called Fuse Online. You can sign up at [fuse-online](https://www.redhat.com/en/technologies/jboss-middleware/fuse-online), and skip right to the [QuickStart](#lets-run-some-quickstarts) section.
 However if you’re like me and you want to be able try things out by running it locally, you probably want to run the Syndesis project bits. This is where this blog is about. I will take you through to the few straightforward steps to
-  * [Install a mini cloud ‘MiniShift’ on your laptop](README.md#2-install-a-local-mini-cloud-called-minishift)
-  * [Install Syndesis on Minishift](README.md#3-install-syndesis)
+  * [Install openshift using oc cluster up](README.md#2-install-openshift-using-oc-cluster-up)
+  * [Install Syndesis on Openshift](README.md#3-install-syndesis)
   * [Run some QuickStarts](README.md#4-lets-run-some-quickstarts)
 
-## 2. Install a local mini cloud called MiniShift
-In order to have a small cloud running on your laptop you need to install MiniShift. MiniShift is a one node version installation of [OpenShift OKD](https://docs.okd.io/latest/welcome/index.html) running in a virtual machine. MiniShift supports a few virtualization technogies such as KVM, xHyve, Hyper-V and VirtualBox and can be installed on different operating systems:
+## 2. Install openshift using oc cluster up
+Follow instructions given in the below URL to install Openshift on Centos7 machine. Use packet host(z1.samll.x86) hosted in Dallas, Texas. Provide cluster-admin privileges to developer user.
 
-  * [Linux](https://docs.okd.io/latest/minishift/getting-started/setting-up-virtualization-environment.html#for-linux)
-  * [Windows](https://docs.okd.io/latest/minishift/getting-started/setting-up-virtualization-environment.html#for-windows)
-  * [MacOS](https://docs.okd.io/latest/minishift/getting-started/setting-up-virtualization-environment.html#for-macos)
-
-If you are on MacOS and you want to use Hyperkit, and are ok with [homebrew](https://brew.sh) then you can follow the following instructions
-```
-brew install hyperkit
-brew install docker-machine-driver-hyperkit
-sudo chown root:wheel /usr/local/bin/docker-machine-driver-hyperkit
-sudo chmod u+s /usr/local/bin/docker-machine-driver-hyperkit
-```
-To install [minishift](https://www.okd.io/minishift/) itself use
-```
-brew cask install minishift
-minishift config set vm-driver hyperkit
-```
-or simply download the minishift binary from [github](https://github.com/minishift/minishift/releases). Hop onto [IRC](https://webchat.freenode.net) (#syndesis) to chat with us if you need help with any of this!
+      https://github.com/srinivma1/minishift-centos
 
 ## 3. Install Syndesis
-We will now download the docker images from our official dockerhub repository and start them on your minishift installation using
 ```
-bash <(curl -sL https://syndes.is/start --vm-driver hyperkit)
+# Clone the Syndesis repository
+$ git clone https://github.com/syndesisio/syndesis.git
+
+# Set path to include Syndesis' tool directory
+$ export PATH=${PATH}:$(pwd)/syndesis/tools/bin
+
+# Alternatively, set a symbolic link to "syndesis"
+$ ln -s $(pwd)/syndesis/tools/bin/syndesis /usr/local/bin
+
+ $ syndesis install --setup
+ 
+ $ syndesis install
 ```
-Note that on Windows you will need something like [Cygwin](https://www.cygwin.com) or [KornShell](http://www.kornshell.com) for this to work. The installation process itself can take a few minutes depending on your download speed, but this is all there is to it. At the end of the installation it will open your default browser to the syndesis address. By default you can log in using any username/pw combination. For more details see [syndesis.io](https://syndesis.io/quickstart/). 
+
 
 ## 4. Let's run some QuickStarts
 
